@@ -10,11 +10,11 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  int _selectedIndex = 1;
+  int _Index = 1;
 
   void _onItemTapped(int index) {
     setState(() {
-      _selectedIndex = index;
+      _Index = index;
     });
   }
 
@@ -23,6 +23,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       theme: ThemeData(primarySwatch: Colors.purple),
       home: Scaffold(
+    
         appBar: AppBar(title: Text("Hello World")),
         body: Center(
           child: Column(
@@ -37,7 +38,7 @@ class _MyAppState extends State<MyApp> {
         ),
         bottomNavigationBar: BottomNavigationBar(
           backgroundColor: Colors.white,
-          currentIndex: _selectedIndex,
+          currentIndex: _Index,
           selectedItemColor:
               Colors.blue, // cor do ícone e rótulo do item selecionado
           unselectedItemColor:
