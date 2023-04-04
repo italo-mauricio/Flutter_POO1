@@ -32,10 +32,16 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(primarySwatch: Colors.blue),
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+      primarySwatch: Colors.amber,
+      textTheme: const TextTheme(
+        bodyText2: TextStyle(fontFamily: 'Open Sans'),
+      ),
+    ),
       home: Scaffold(
         appBar: AppBar(
-          title: const Text("Noticias",
+          title: const Text("Cervejas",
               style: TextStyle(
                   color: Colors.black, fontWeight: FontWeight.bold)),
           centerTitle: true,
@@ -45,7 +51,7 @@ class _MyAppState extends State<MyApp> {
           children: _pages,
         ),
         bottomNavigationBar: BottomNavigationBar(
-          backgroundColor: Colors.white,
+          backgroundColor: Colors.amber,
           currentIndex: _Index,
           selectedItemColor: Colors.blue,
           unselectedItemColor: Colors.green,
@@ -79,4 +85,8 @@ class _MyAppState extends State<MyApp> {
   void telaInicial(){
 
   }
+  void pesquisar(){
+
+  }
+ 
 }
