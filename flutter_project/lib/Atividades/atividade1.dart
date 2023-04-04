@@ -15,11 +15,11 @@ class _MyAppState extends State<MyApp> {
 
   final List<Widget> _pages = [
     // adicione aqui os widgets que deseja exibir em cada página
-    Center(child: Text("Página Inicial")),
-    Center(child: Text("Pesquisar")),
-    Center(child: Text("Favoritos")),
-    Center(child: Text("Localização")),
-    Center(child: Text("Meu Perfil")),
+    const Center(child: Text("Página Inicial")),
+    const Center(child: Text("Pesquisar")),
+    const Center(child: Text("Favoritos")),
+    const Center(child: Text("Localização")),
+    const Center(child: Text("Meu Perfil")),
   ];
 
 
