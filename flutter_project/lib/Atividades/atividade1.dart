@@ -15,11 +15,11 @@ class _MyAppState extends State<MyApp> {
 
   final List<Widget> _pages = [
     // adicione aqui os widgets que deseja exibir em cada página
-    Center(child: Text("página 1")),
-    Center(child: Text("Página 2")),
-    Center(child: Text("Página 3")),
-    Center(child: Text("Página 4")),
-    Center(child: Text("página 5")),
+    Center(child: Text("Página Inicial")),
+    Center(child: Text("Pesquisar")),
+    Center(child: Text("Favoritos")),
+    Center(child: Text("Localização")),
+    Center(child: Text("Meu Perfil")),
   ];
 
 
@@ -35,7 +35,7 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData(primarySwatch: Colors.blue),
       home: Scaffold(
         appBar: AppBar(
-          title: const Text("Ifilmes",
+          title: const Text("Noticias",
               style: TextStyle(
                   color: Colors.black, fontWeight: FontWeight.bold)),
           centerTitle: true,
@@ -56,19 +56,19 @@ class _MyAppState extends State<MyApp> {
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.search),
-              label: "Visitas",
+              label: "Pesquisar",
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.sports_soccer_outlined),
-              label: "Esportes",
+              icon: Icon(Icons.favorite),
+              label: "Favoritos",
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.access_time),
-              label: "access_time",
+              icon: Icon(Icons.location_on),
+              label: "Localização",
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.view_week),
-              label: "Visitas",
+              icon: Icon(Icons.account_box),
+              label: "Perfil",
             ),
           ],
           onTap: _onItemTapped,
