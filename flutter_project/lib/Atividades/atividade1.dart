@@ -34,24 +34,27 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-      primarySwatch: Colors.amber,
+  
       textTheme: const TextTheme(
         bodyText2: TextStyle(fontFamily: 'Open Sans'),
       ),
     ),
       home: Scaffold(
         appBar: AppBar(
+          backgroundColor: Colors.amber,
           title: const Text("Cervejas",
               style: TextStyle(
-                  color: Colors.black, fontWeight: FontWeight.bold)),
+                  color: Colors.black, fontWeight: FontWeight.bold,)),
           centerTitle: true,
         ),
         body: IndexedStack(
           index: _Index,
           children: _pages,
         ),
-        bottomNavigationBar: BottomNavigationBar(
-          backgroundColor: Colors.amber,
+        bottomNavigationBar: Theme(data:ThemeData(
+          canvasColor: Colors.amber
+        ), 
+        child:BottomNavigationBar(
           currentIndex: _Index,
           selectedItemColor: Colors.blue,
           unselectedItemColor: Colors.green,
@@ -80,7 +83,8 @@ class _MyAppState extends State<MyApp> {
           onTap: _onItemTapped,
         ),
       ),
-    );
+    )); 
+       
   }
   void telaInicial(){
 
