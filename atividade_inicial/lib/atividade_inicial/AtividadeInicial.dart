@@ -15,7 +15,7 @@ class _MyAppState extends State<MyApp> {
 
   final List<Widget> _pages = [
     // adicione aqui os widgets que deseja exibir em cada página
-    const Center(child: Text("Página Inicial")),
+    Center(child: const Text("Página Inicial")),
     const Center(child: Text("Pesquisar")),
     const Center(child: Text("Favoritos")),
     const Center(child: Text("Localização")),
@@ -41,8 +41,8 @@ class _MyAppState extends State<MyApp> {
     ),
       home: Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.amber,
-          title: const Text("Cervejas",
+          backgroundColor: Colors.blue,
+          title: const Text("APP Inicial",
               style: TextStyle(
                   color: Colors.black, fontWeight: FontWeight.bold,)),
           centerTitle: true,
@@ -52,12 +52,12 @@ class _MyAppState extends State<MyApp> {
           children: _pages,
         ),
         bottomNavigationBar: Theme(data:ThemeData(
-          canvasColor: Colors.amber
+          canvasColor: Colors.blue
         ), 
         child:BottomNavigationBar(
           currentIndex: _Index,
-          selectedItemColor: Colors.blue,
-          unselectedItemColor: Colors.green,
+          selectedItemColor: Colors.amber,
+          unselectedItemColor: Colors.black,
           items: const [
             BottomNavigationBarItem(
               icon: Icon(Icons.person),
