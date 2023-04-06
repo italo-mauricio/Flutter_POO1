@@ -14,13 +14,34 @@ class _MyAppState extends State<MyApp> {
   int _Index = 0;
 
   final List<Widget> _pages = [
-    // adicione aqui os widgets que deseja exibir em cada página
-    const Center(child: Text("Página Inicial")),
-    const Center(child: Text("Pesquisar")),
-    const Center(child: Text("Favoritos")),
-    const Center(child: Text("Localização")),
-    const Center(child: Text("Meu Perfil")),
-  ];
+  // adiciona aqui os widgets que deseja exibir em cada página
+  LayoutBuilder(
+    builder: (BuildContext context, BoxConstraints constraints) {
+      return SingleChildScrollView(
+        child: ConstrainedBox(
+          constraints: BoxConstraints(
+            maxWidth: constraints.maxWidth,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              SizedBox(height: 16),
+              const Text(
+                "Lionel Messi é um dos jogadores mais icônicos e talentosos do futebol mundial. Desde sua infância na Argentina, Messi sempre demonstrou um talento excepcional para o esporte, e aos 13 anos de idade, ele se mudou para Barcelona para se juntar às categorias de base do time local. Ao longo dos anos, Messi se estabeleceu como uma lenda do Barcelona, ​​vencendo inúmeras competições e prêmios individuais. Seu talento e habilidade inigualáveis ​​fizeram dele um dos maiores jogadores de todos os tempos.",
+                textAlign: TextAlign.justify,
+                style: TextStyle(fontSize: 16), 
+              ), Image.network('https://www.otempo.com.br/image/contentid/policy:1.1949890:1531768523/image-image-jpg.jpg?f=3x2&w=1224'),  
+            ],
+          ),
+        ),
+      );
+    },
+  ),
+  const Center(child: Text("Pesquisar")),
+  const Center(child: Text("Favoritos")),
+  const Center(child: Text("Localização")),
+  const Center(child: Text("Meu Perfil")),
+];
 
 
   void _onItemTapped(int index) {
@@ -41,8 +62,8 @@ class _MyAppState extends State<MyApp> {
     ),
       home: Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.amber,
-          title: const Text("Cervejas",
+          backgroundColor: Colors.blueAccent,
+          title: const Text("Barcelona Legend",
               style: TextStyle(
                   color: Colors.black, fontWeight: FontWeight.bold,)),
           centerTitle: true,
@@ -52,7 +73,7 @@ class _MyAppState extends State<MyApp> {
           children: _pages,
         ),
         bottomNavigationBar: Theme(data:ThemeData(
-          canvasColor: Colors.amber
+          canvasColor: Colors.redAccent
         ), 
         child:BottomNavigationBar(
           currentIndex: _Index,
