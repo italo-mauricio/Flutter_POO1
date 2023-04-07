@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+// ignore: depend_on_referenced_packages, import_of_legacy_library_into_null_safe
+import 'dart:math' as math;
 
 import 'assets/imagens.dart';
 
@@ -24,7 +25,10 @@ TextStyle _FontNormalText = const TextStyle(
 class MyApp extends StatefulWidget {
   @override
   _MyAppState createState() => _MyAppState();
+  
 }
+
+
 
 Widget _historiaBarca = SingleChildScrollView(
   child: Container(
@@ -32,10 +36,11 @@ Widget _historiaBarca = SingleChildScrollView(
         16.0), // Adiciona um padding de 16.0 em todas as direções
     child: Column(
       children: <Widget>[
-        const Image(
-          image: imageBarcaLogo,
-          height: 200, // Altura da imagem em pixels
-        ),
+        const FadeInImage(
+        placeholder: NetworkImage('https://pbs.twimg.com/media/Fs0BPfGWwAI39Pi.png'),
+        image: imageBarcaLogo,
+        height: 200, // Altura da imagem em pixels
+      ),
         const SizedBox(height: 16.0),
         Text(
           'Em 1899, Joan Gamper, um suíço, decidiu introduzir o futebol em Barcelona, montando um time. O clube foi oficialmente fundado no dia 29 de novembro de 1899.',
@@ -98,12 +103,13 @@ Widget _lionelMessi = SingleChildScrollView(
   padding: EdgeInsets.all(16.0),
   child: Column(
     children: const <Widget>[
-      Image(
+      FadeInImage(
+        placeholder: NetworkImage('https://pbs.twimg.com/media/Fs0BPfGWwAI39Pi.png'),
         image: imageMessi,
         height: 200, // Altura da imagem em pixels
       ),
       SizedBox(height: 16.0),
-      Text("")
+      Text("dsadasdsd")
     ],
   ),
 ));
