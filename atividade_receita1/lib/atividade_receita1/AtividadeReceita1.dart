@@ -22,39 +22,45 @@ class MyApp extends StatefulWidget {
   _MyAppState createState() => _MyAppState();
 }
 
-final imageProvider = NetworkImage(
+const imageProvider = NetworkImage(
     'https://upload.wikimedia.org/wikipedia/pt/thumb/4/43/FCBarcelona.svg/1010px-FCBarcelona.svg.png');
-
-Widget _historiaBarca = Container(
-  padding:
-      EdgeInsets.all(16.0), // Adiciona um padding de 16.0 em todas as direções
-  child: Column(
-    children: <Widget>[
-      Image(
-        image: imageProvider,
-        height: 200, // Altura da imagem em pixels
-      ),
-      SizedBox(height: 16.0),
-      Text(
-        'Em 1899, Joan Gamper, um suíço, decidiu introduzir o futebol em Barcelona, montando um time. O clube foi oficialmente fundado no dia 29 de novembro de 1899.',
-        style: _FontNormalText,
-      ),
-      SizedBox(height: 16.0),
-      Text(
-        'Cresceu cada vez mais, ganhando títulos como a Copa Macaya em 1902, a Copa Pirineus em 1910 - 1912. Durante a década de 1920, a fama e o sucesso do time aumentou. Eles ganharam o primeiro Campeonato da Liga na temporada de 1928 - 1929. Com a nova popularidade do clube, foi necessário construir um novo estádio. Em 1922, o estádio ‘Les Corts’ foi construído, com capacidade para 22.000 pessoas.',
-        style: _FontNormalText,
-      ),
-      SizedBox(height: 16.0),
-      Text(
-        'É importante lembrar que o Barcelona FC sobreviveu à Guerra Civil. Em 1936, as tropas de Franco atiraram no presidente do clube, Josep Sunyol, devido à sua filiação a um partido de esquerda.',
-        style: _FontNormalText,
-      ),
-      SizedBox(height: 16.0),
-      Text(
-        'Todos os fãs do Barcelona FC se orgulham do que é chamado de Temporada de ‘Cinco Copas’. Este foi o período entre 1951 - 1952, quando o Barcelona FC venceu a Copa, a Liga, a Copa América, o Martini Rosso e o Eva Duarte.',
-        style: _FontNormalText,
-      ),
-    ],
+Widget _historiaBarca = SingleChildScrollView(
+  child: Container(
+    padding: EdgeInsets.all(
+        16.0), // Adiciona um padding de 16.0 em todas as direções
+    child: Column(
+      children: <Widget>[
+        const Image(
+          image: imageProvider,
+          height: 200, // Altura da imagem em pixels
+        ),
+        SizedBox(height: 16.0),
+        Text(
+          'Em 1899, Joan Gamper, um suíço, decidiu introduzir o futebol em Barcelona, montando um time. O clube foi oficialmente fundado no dia 29 de novembro de 1899.',
+          style: _FontNormalText,
+        ),
+        SizedBox(height: 16.0),
+        Text(
+          'Cresceu cada vez mais, ganhando títulos como a Copa Macaya em 1902, a Copa Pirineus em 1910 - 1912. Durante a década de 1920, a fama e o sucesso do time aumentou. Eles ganharam o primeiro Campeonato da Liga na temporada de 1928 - 1929. Com a nova popularidade do clube, foi necessário construir um novo estádio. Em 1922, o estádio ‘Les Corts’ foi construído, com capacidade para 22.000 pessoas.',
+          style: _FontNormalText,
+        ),
+        SizedBox(height: 16.0),
+        Text(
+          'É importante lembrar que o Barcelona FC sobreviveu à Guerra Civil. Em 1936, as tropas de Franco atiraram no presidente do clube, Josep Sunyol, devido à sua filiação a um partido de esquerda.',
+          style: _FontNormalText,
+        ),
+        SizedBox(height: 16.0),
+        Text(
+          'Todos os fãs do Barcelona FC se orgulham do que é chamado de Temporada de ‘Cinco Copas’. Este foi o período entre 1951 - 1952, quando o Barcelona FC venceu a Copa, a Liga, a Copa América, o Martini Rosso e o Eva Duarte.',
+          style: _FontNormalText,
+        ),
+         SizedBox(height: 16.0),
+        Text(
+          'Todos os fãs do Barcelona FC se orgulham do que é chamado de Temporada de ‘Cinco Copas’. Este foi o período entre 1951 - 1952, quando o Barcelona FC venceu a Copa, a Liga, a Copa América, o Martini Rosso e o Eva Duarte.',
+          style: _FontNormalText,
+        ),
+      ],
+    ),
   ),
 );
 
@@ -79,12 +85,9 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          textTheme: const TextTheme(
-            bodyText2: TextStyle(fontFamily: 'Open Sans'),
-          ),
-        ),
+        debugShowCheckedModeBanner:
+            false, // desabilitando o "debug" no canto da tela
+        theme: ThemeData(colorScheme: const ColorScheme.light()),
         home: Scaffold(
           appBar: AppBar(
             backgroundColor: Colors.blueAccent,
