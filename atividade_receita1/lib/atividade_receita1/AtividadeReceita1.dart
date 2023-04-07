@@ -64,16 +64,16 @@ class _MyAppState extends State<MyApp> {
                   label: "Inicial",
                 ),
                 BottomNavigationBarItem(
-                  icon: Icon(Icons.auto_fix_high),
+                  icon: Icon(Icons.grade),
                   label: "Lionel Messi",
                 ),
                 BottomNavigationBarItem(
-                  icon: Icon(Icons.favorite),
+                  icon: Icon(Icons.home),
                   label: "Camp Nou",
                 ),
                 BottomNavigationBarItem(
-                  icon: Icon(Icons.location_on),
-                  label: "Localização",
+                  icon: Icon(Icons.emoji_events),
+                  label: "Títulos",
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(Icons.account_box),
