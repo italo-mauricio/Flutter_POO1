@@ -7,7 +7,6 @@ void Atividade1() {
   runApp(MyApp());
 }
 
-
 // fontes para usar no resto do código
 TextStyle _FontHeader = const TextStyle(
     fontStyle: FontStyle.italic,
@@ -21,13 +20,10 @@ TextStyle _FontNormalText = const TextStyle(
     fontSize: 20,
     color: Colors.black);
 
-
 class MyApp extends StatefulWidget {
   @override
   _MyAppState createState() => _MyAppState();
 }
-
-
 
 Widget _historiaBarca = SingleChildScrollView(
   child: Container(
@@ -69,28 +65,27 @@ Widget _historiaBarca = SingleChildScrollView(
           ' Em 2003, uma nova leva de jogadores se juntou ao time. Isso incluiu Rijkaard e Ronaldinho, Puyol e Xavi. Em 2004 - 2005, jogadores como Deco e Etoo se juntaram ao time.Na temporada de 2004 - 2005, o Barcelona FC ganhou a Liga. Isso aconteceu novamente em 2005 - 2006, quando o clube ganhou a Liga novamente e a Copa Europeia em Paris.',
           style: _FontNormalText,
         ),
+        SizedBox(height: 16.0),
+        RichText(text: TextSpan(text: "Barcelona Atual", style: _FontHeader))
       ],
     ),
   ),
 );
 
-
 Widget _lionelMessi = SingleChildScrollView(
-  child: Container(
-    padding: EdgeInsets.all(16.0),
-    child: Column(
-      children: const <Widget>[
-       Image(
-          image: imageMessi,
-          height: 200, // Altura da imagem em pixels
-        ),
-      ],
-    ),
-  )
-);
-
-
-
+    child: Container(
+  padding: EdgeInsets.all(16.0),
+  child: Column(
+    children: const <Widget>[
+      Image(
+        image: imageMessi,
+        height: 200, // Altura da imagem em pixels
+      ),
+      SizedBox(height: 16.0),
+      Text("dasdsad")
+    ],
+  ),
+));
 
 class _MyAppState extends State<MyApp> {
   int _Index = 0;
@@ -98,7 +93,7 @@ class _MyAppState extends State<MyApp> {
     Center(
       child: _historiaBarca,
     ),
-    const Center(child: Text("Pesquisar")),
+    Center(child: _lionelMessi),
     const Center(child: Text("Favoritos")),
     const Center(child: Text("Localização")),
     const Center(child: Text("Meu Perfil")),
