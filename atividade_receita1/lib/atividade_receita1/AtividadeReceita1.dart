@@ -1,3 +1,6 @@
+import 'teste.dart';
+
+
 import 'package:flutter/material.dart';
 // ignore: depend_on_referenced_packages, import_of_legacy_library_into_null_safe
 import 'dart:math' as math;
@@ -198,6 +201,7 @@ Widget _EstadioBarcelona = SingleChildScrollView(
 
 
 
+
 class _MyAppState extends State<MyApp> {
   int _Index = 0;
   final List<Widget> _pages = [
@@ -205,7 +209,7 @@ class _MyAppState extends State<MyApp> {
     Center(child: _historiaBarca,),
     Center(child: _lionelMessi),
     Center(child: _EstadioBarcelona),
-    const Center(child: Text("Localização")),
+    Center(child: tabelaBarcelona()),
     const Center(child: Text("Meu Perfil")),
   ];
 
