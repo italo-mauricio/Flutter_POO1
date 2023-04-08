@@ -19,7 +19,6 @@ Widget tabelaBarcelona() {
     1992,
     2009
   ];
-
   return DataTable(
     columns: [
       DataColumn(label: Text('Título')),

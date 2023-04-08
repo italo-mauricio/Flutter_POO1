@@ -1,11 +1,10 @@
-import 'teste.dart';
-
-
+import 'table/tabela.dart';
 import 'package:flutter/material.dart';
 // ignore: depend_on_referenced_packages, import_of_legacy_library_into_null_safe
 import 'dart:math' as math;
-
 import 'assets/imagens.dart';
+
+
 
 // ignore: non_constant_identifier_names
 void Atividade1() {
