@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'atividade/cerveja.dart';
 
-
-void main(){
-  
+void main() {
+  projeto2();
 }
