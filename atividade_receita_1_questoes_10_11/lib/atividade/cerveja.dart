@@ -18,7 +18,7 @@ TextStyle _FontNormalText = GoogleFonts.openSans(
   color: Colors.black,
 );
 
-void projeto2() {
+void cervejas() {
   runApp(MyApp());
 }
 
