@@ -1,15 +1,13 @@
 import 'table/tabela.dart';
 import 'package:flutter/material.dart';
-
 import 'package:google_fonts/google_fonts.dart';
-// ignore: depend_on_referenced_packages, import_of_legacy_library_into_null_safe
 import 'dart:math' as math;
 import 'assets/imagens.dart';
 import 'content/messi.dart';
 import 'content/barcelona.dart';
 import 'content/campNou.dart';
+import 'content/autor.dart';
 
-// ignore: non_constant_identifier_names
 void Atividade1() {
   runApp(MyApp());
 }
@@ -41,7 +39,7 @@ class _MyAppState extends State<MyApp> {
     Center(child: lionelMessi()),
     Center(child: estadioBarcelona()),
     Center(child: tabelaBarcelona()),
-    const Center(child: Text("Meu Perfil")),
+    Center(child: meuPerfil()),
   ];
 
   void _onItemTapped(int index) {
@@ -97,6 +95,7 @@ class _MyAppState extends State<MyApp> {
               onTap: _onItemTapped,
             ),
           ),
-        ));
+        ),
+      );
+    }
   }
-}
