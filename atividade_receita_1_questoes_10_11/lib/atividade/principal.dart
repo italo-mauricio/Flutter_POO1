@@ -1,5 +1,4 @@
 
-
 export 'package:flutter/material.dart';
 export 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +7,7 @@ import 'dart:math' as math;
 import 'cerveja.dart';
 import 'tabelaBrasil.dart';
 import 'autor.dart';
+import 'historia.dart';
 
 
 void Atividade1() {
@@ -39,7 +39,7 @@ class _MyAppState extends State<MyApp> {
   final List<Widget> _pages = [
     Center(child: BeerTable()),
     Center(child: BeerTableBrasil()),
-    Center(child: Text("teste")),
+    Center(child: historiaCerveja()),
     Center(child: meuPerfil()),
 
   ];
@@ -71,8 +71,8 @@ class _MyAppState extends State<MyApp> {
             data: ThemeData(canvasColor: Colors.amber),
             child: BottomNavigationBar(
               currentIndex: _Index,
-              selectedItemColor: Colors.white,
-              unselectedItemColor: Colors.black,
+              selectedItemColor: Colors.black,
+              unselectedItemColor: Colors.blue,
               items: const [
                 BottomNavigationBarItem(
                   icon: Icon(Icons.person),

@@ -154,9 +154,7 @@ class BeerTableBrasil extends StatelessWidget {
                 DataCell(Text('70', style: _FontNormalText)),
                 DataCell(Text('Brasil', style: _FontNormalText)),
                 DataCell(Text('8,0% de álcool', style: _FontNormalText)),
-              ]),
-              
-    
+              ]),   
             ],
           ),
         ),
