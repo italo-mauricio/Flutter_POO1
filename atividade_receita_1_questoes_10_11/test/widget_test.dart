@@ -6,6 +6,7 @@
 // tree, read text, and verify that the values of widget properties are correct.
 
 import 'package:atividade_receita_1_questoes_10_11/atividade/cerveja.dart';
+import 'package:atividade_receita_1_questoes_10_11/atividade/principal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:atividade_receita_1_questoes_10_11/main.dart';
