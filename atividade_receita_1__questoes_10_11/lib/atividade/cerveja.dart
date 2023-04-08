@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
         home: Scaffold(
           appBar: AppBar(
             title: Text('Cervejas pelo Mundo',
-                style: TextStyle(color: Colors.black)),
+                style: _FontHeader),
             backgroundColor: Colors.amber,
             centerTitle: true,
           ),
@@ -80,7 +80,7 @@ class MyApp extends StatelessWidget {
                       DataCell(Text('Bock', style: _FontNormalText)),
                       DataCell(Text('65', style: _FontNormalText)),
                       DataCell(Text('Canadá', style: _FontNormalText)),
-                      DataCell(Text('9% de álcool', style: _FontNormalText)),
+                      DataCell(Text('9,0% de álcool', style: _FontNormalText)),
                     ]),
                     DataRow(
                       selected: true,
@@ -130,6 +130,15 @@ class MyApp extends StatelessWidget {
                     DataRow(
                       selected: true,
                       cells: [
+                      DataCell(Text('Skol', style: _FontNormalText)),
+                      DataCell(Text('Lager', style: _FontNormalText)),
+                      DataCell(Text('11', style: _FontNormalText)),
+                      DataCell(Text('Brasil', style: _FontNormalText)),
+                      DataCell(Text('4,4% de álcool', style: _FontNormalText)),
+                    ]),
+                    DataRow(
+                      selected: true,
+                      cells: [
                       DataCell(Text('La Fin Du Monde', style: _FontNormalText)),
                       DataCell(Text('Belgian Tripel', style: _FontNormalText)),
                       DataCell(Text('19', style: _FontNormalText)),
@@ -144,6 +153,15 @@ class MyApp extends StatelessWidget {
                       DataCell(Text('10', style: _FontNormalText)),
                       DataCell(Text('Estados Unidos', style: _FontNormalText)),
                       DataCell(Text('5,0% de álcool', style: _FontNormalText)),
+                    ]),
+                    DataRow(
+                      selected: true,
+                      cells: [
+                      DataCell(Text('Schin', style: _FontNormalText)),
+                      DataCell(Text('Lager', style: _FontNormalText)),
+                      DataCell(Text('7', style: _FontNormalText)),
+                      DataCell(Text('Brasil', style: _FontNormalText)),
+                      DataCell(Text('4,7% de álcool', style: _FontNormalText)),
                     ]),
                     DataRow(
                       selected: true,
@@ -184,11 +202,74 @@ class MyApp extends StatelessWidget {
                     DataRow(
                       selected: true,
                       cells: [
-                      DataCell(Text('Skoll', style: _FontNormalText)),
-                      DataCell(Text('Lager', style: _FontNormalText)),
-                      DataCell(Text('23', style: _FontNormalText)),
+                      DataCell(Text('Brahma', style: _FontNormalText)),
+                      DataCell(Text('Premium American', style: _FontNormalText)),
+                      DataCell(Text('13', style: _FontNormalText)),
                       DataCell(Text('Brasil', style: _FontNormalText)),
+                      DataCell(Text('5,5% de álcool', style: _FontNormalText)),
+                    ]),
+                    DataRow(
+                      selected: true,
+                      cells: [
+                      DataCell(Text('Itaipava', style: _FontNormalText)),
+                      DataCell(Text('American Lager', style: _FontNormalText)),
+                      DataCell(Text('9,5', style: _FontNormalText)),
+                      DataCell(Text('Brasil', style: _FontNormalText)),
+                      DataCell(Text('4,0% de álcool', style: _FontNormalText)),
+                    ]),
+                    DataRow(
+                      selected: true,
+                      cells: [
+                      DataCell(Text('Amstel', style: _FontNormalText)),
+                      DataCell(Text('Lager', style: _FontNormalText)),
+                      DataCell(Text('11', style: _FontNormalText)),
+                      DataCell(Text('Holanda', style: _FontNormalText)),
+                      DataCell(Text('4,6% de álcool', style: _FontNormalText)),
+                    ]),
+                    DataRow(
+                      selected: true,
+                      cells: [
+                      DataCell(Text('Colorado Indica', style: _FontNormalText)),
+                      DataCell(Text('India Pale Ale', style: _FontNormalText)),
+                      DataCell(Text('45', style: _FontNormalText)),
+                      DataCell(Text('Brasil', style: _FontNormalText)),
+                      DataCell(Text('7,0% de álcool', style: _FontNormalText)),
+                    ]),
+                    DataRow(
+                      selected: true,
+                      cells: [
+                      DataCell(Text('Tsingtao', style: _FontNormalText)),
+                      DataCell(Text('Light', style: _FontNormalText)),
+                      DataCell(Text('23', style: _FontNormalText)),
+                      DataCell(Text('China', style: _FontNormalText)),
                       DataCell(Text('4,5% de álcool', style: _FontNormalText)),
+                    ]),
+                    DataRow(
+                      selected: true,
+                      cells: [
+                      DataCell(Text('Tupiniquim Monjolo', style: _FontNormalText)),
+                      DataCell(Text('Imperial Porter', style: _FontNormalText)),
+                      DataCell(Text('35', style: _FontNormalText)),
+                      DataCell(Text('Brasil', style: _FontNormalText)),
+                      DataCell(Text('10,5% de álcool', style: _FontNormalText)),
+                    ]),
+                    DataRow(
+                      selected: true,
+                      cells: [
+                      DataCell(Text('Westvleteren', style: _FontNormalText)),
+                      DataCell(Text('Belgian Specialty Ale', style: _FontNormalText)),
+                      DataCell(Text('41', style: _FontNormalText)),
+                      DataCell(Text('Bélgica', style: _FontNormalText)),
+                      DataCell(Text('5,8% de álcool', style: _FontNormalText)),
+                    ]),
+                    DataRow(
+                      selected: true,
+                      cells: [
+                      DataCell(Text('Chimay Grande Reserve', style: _FontNormalText)),
+                      DataCell(Text('Belgian Dark Strong Ale', style: _FontNormalText)),
+                      DataCell(Text('41', style: _FontNormalText)),
+                      DataCell(Text('Bélgica', style: _FontNormalText)),
+                      DataCell(Text('9,0% de álcool', style: _FontNormalText)),
                     ]),
                   ],
                 ),
