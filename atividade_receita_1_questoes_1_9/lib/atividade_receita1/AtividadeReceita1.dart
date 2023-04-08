@@ -57,7 +57,7 @@ class _MyAppState extends State<MyApp> {
         home: Scaffold(
           appBar: AppBar(
             backgroundColor: Colors.blueAccent,
-            title: Text("Barcelona Fútbol Club", style: _FontHeader),
+            title: Text("Barcelona Futebol Clube", style: _FontHeader),
             centerTitle: true,
           ),
           body: IndexedStack(
