@@ -1,5 +1,7 @@
 import 'table/tabela.dart';
 import 'package:flutter/material.dart';
+
+import 'package:google_fonts/google_fonts.dart';
 // ignore: depend_on_referenced_packages, import_of_legacy_library_into_null_safe
 import 'dart:math' as math;
 import 'assets/imagens.dart';
@@ -13,17 +15,19 @@ void Atividade1() {
 }
 
 // fontes para usar no resto do código
-TextStyle _FontHeader = const TextStyle(
-    fontStyle: FontStyle.italic,
-    fontWeight: FontWeight.bold,
-    fontSize: 30,
-    color: Colors.black);
+TextStyle _FontHeader = GoogleFonts.openSans(
+  fontSize: 30,
+  fontWeight: FontWeight.bold,
+  fontStyle: FontStyle.normal,
+  color: Colors.black,
+);
 
-TextStyle _FontNormalText = const TextStyle(
-    fontStyle: FontStyle.normal,
-    fontWeight: FontWeight.normal,
-    fontSize: 20,
-    color: Colors.black);
+TextStyle _FontNormalText = GoogleFonts.openSans(
+  fontSize: 20,
+  fontWeight: FontWeight.normal,
+  fontStyle: FontStyle.normal,
+  color: Colors.black,
+);
 
 class MyApp extends StatefulWidget {
   @override

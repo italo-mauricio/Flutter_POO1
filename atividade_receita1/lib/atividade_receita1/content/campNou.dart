@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../assets/imagens.dart';
 
@@ -8,11 +9,12 @@ TextStyle _FontHeader = const TextStyle(
     fontSize: 30,
     color: Colors.black);
 
-TextStyle _FontNormalText = const TextStyle(
-    fontStyle: FontStyle.normal,
-    fontWeight: FontWeight.normal,
-    fontSize: 20,
-    color: Colors.black);
+TextStyle _FontNormalText = GoogleFonts.openSans(
+  fontSize: 20,
+  fontWeight: FontWeight.normal,
+  fontStyle: FontStyle.normal,
+  color: Colors.black,
+);
 
 Widget estadioBarcelona() {
   return SingleChildScrollView(
