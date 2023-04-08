@@ -86,11 +86,4 @@ class _MyAppState extends State<MyApp> {
     )); 
        
   }
-  void telaInicial(){
-
-  }
-  void pesquisar(){
-
-  }
- 
 }
