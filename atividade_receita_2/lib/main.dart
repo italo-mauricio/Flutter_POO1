@@ -23,10 +23,10 @@ class _MyHomePageState extends State<MyHomePage> {
   int _selectedIndex = 0;
 
   final List<Widget> _widgetOptions = <Widget>[
-    Text("Tela 1"),
-    Text("Tela 2"),
-    Text("Tela 3"),
-    Text("Tela 4")
+    Center(child: Text("Página")),
+    Center(child: Text("Página")),
+    Center(child: Text("Página")),
+    Center(child: Text("Página")),
   ];
 
   void _onItemTapped(int index) {
@@ -42,11 +42,11 @@ class _MyHomePageState extends State<MyHomePage> {
       body: _widgetOptions.elementAt(_selectedIndex),
       bottomNavigationBar: NewNavBar(
           key: UniqueKey(),
-          icons: [
-            Icon(Icons.abc, color: Colors.red),
-            Icon(Icons.ac_unit),
-            Icon(Icons.access_alarm),
-            Icon(Icons.accessibility)
+          icons: const [
+            Icon(Icons.home, color: Colors.red),
+            Icon(Icons.ac_unit, color: Colors.red),
+            Icon(Icons.access_alarm, color: Colors.red),
+            Icon(Icons.accessibility, color: Colors.red)
           ],
           onItemTapped: _onItemTapped,
           selectedIndex: _selectedIndex),
@@ -71,7 +71,7 @@ class NewNavBar extends StatelessWidget {
     return BottomNavigationBar(
       currentIndex: selectedIndex,
       onTap: onItemTapped,
-      unselectedItemColor: Colors.amber,
+      unselectedItemColor: Color.fromARGB(255, 7, 7, 7),
       items: icons
           .asMap()
           .map(
