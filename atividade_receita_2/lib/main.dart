@@ -23,10 +23,10 @@ class _MyHomePageState extends State<MyHomePage> {
   int _selectedIndex = 0;
 
   final List<Widget> _widgetOptions = <Widget>[
-    Center(child: Text("Página")),
-    Center(child: Text("Página")),
-    Center(child: Text("Página")),
-    Center(child: Text("Página")),
+    Center(child: Text("Página 1")),
+    Center(child: Text("Página 2")),
+    Center(child: Text("Página 3")),
+    Center(child: Text("Página 4")),
   ];
 
   void _onItemTapped(int index) {
