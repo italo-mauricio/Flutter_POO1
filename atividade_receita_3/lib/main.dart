@@ -1,11 +1,14 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  MyApp app = MyApp();
+  MyApp app = const MyApp();
   runApp(app);
 }
 
 class MyApp extends StatefulWidget {
+  const MyApp({super.key});
+
   @override
   State<StatefulWidget> createState() => _MyAppState();
 }
@@ -27,7 +30,7 @@ class _MyAppState extends State<MyApp> {
       home: Scaffold(
         appBar: MyAppBar(onColorSelected: changeBackgroundColor),
         body: DataBodyWidget(
-          objects: [
+          objects: const [
             "La Fin Du Monde - Bock - 65 ibu",
             "Sapporo Premiume - Sour Ale - 54 ibu",
             "Duvel - Pilsner - 82 ibu"
@@ -35,7 +38,7 @@ class _MyAppState extends State<MyApp> {
           backgroundColor: _backgroundColor,
         ),
         bottomNavigationBar: NewNavBar(
-          icons: [
+          icons: const [
             Icon(Icons.abc),
             Icon(Icons.ac_unit),
             Icon(Icons.access_alarm),
@@ -47,12 +50,15 @@ class _MyAppState extends State<MyApp> {
   }
 }
 
+// ignore: must_be_immutable
 class NewNavBar extends StatelessWidget {
   List<Icon> icons;
-  NewNavBar({this.icons = const []});
+  NewNavBar({super.key, this.icons = const []});
 
   void touchedButton(int index) {
-    print("Touched: $index");
+    if (kDebugMode) {
+      print("Touched: $index");
+    }
   }
 
   @override
@@ -92,7 +98,8 @@ class DataBodyWidget extends StatelessWidget {
 }
 
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
-  Size get preferredSize => new Size.fromHeight(kToolbarHeight);
+  @override
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
   final Function(Color) onColorSelected;
 
   const MyAppBar({super.key, required this.onColorSelected});
@@ -105,7 +112,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
       actions: [
         PopupMenuButton(
           onSelected: (value) {
-            onColorSelected?.call(value);
+            onColorSelected.call(value);
           },
           itemBuilder: (context) => [
             const PopupMenuItem(
