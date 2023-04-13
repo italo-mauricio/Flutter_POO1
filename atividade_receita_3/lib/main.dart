@@ -1,105 +1,100 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(MyApp());
+  MyApp app = MyApp();
+
+  runApp(app);
 }
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        debugShowCheckedModeBanner: false,
         theme: ThemeData(primarySwatch: Colors.deepPurple),
-        home: MyHomePage());
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _selectedIndex = 0;
-
-  final List<Widget> _widgetOptions = <Widget>[
-    Center(child: Text("Página 1")),
-    Center(child: Text("Página 2")),
-    Center(child: Text("Página 3")),
-    Center(child: Text("Página 4")),
-  ];
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: NewAppBar(),
-      body: _widgetOptions.elementAt(_selectedIndex),
-      bottomNavigationBar: NewNavBar(
-          key: UniqueKey(),
-          icons: const [
-            Icon(Icons.home, color: Colors.red),
-            Icon(Icons.ac_unit, color: Colors.red),
-            Icon(Icons.access_alarm, color: Colors.red),
-            Icon(Icons.accessibility, color: Colors.red)
-          ],
-          onItemTapped: _onItemTapped,
-          selectedIndex: _selectedIndex),
-    );
+        debugShowCheckedModeBanner: false,
+        home: Scaffold(
+          appBar: MyAppBar(),
+          body: DataBodyWidget(objects: [
+            "La Fin Du Monde - Bock - 65 ibu",
+            "Sapporo Premiume - Sour Ale - 54 ibu",
+            "Duvel - Pilsner - 82 ibu"
+          ]),
+          bottomNavigationBar: NewNavBar(icons: [
+            Icon(Icons.abc),
+            Icon(Icons.ac_unit),
+            Icon(Icons.access_alarm),
+            Icon(Icons.accessibility)
+          ]),
+        ));
   }
 }
 
 class NewNavBar extends StatelessWidget {
-  final List<Icon> icons;
-  final void Function(int) onItemTapped;
-  final int selectedIndex;
+  List<Icon> icons;
+  NewNavBar({this.icons = const []});
 
-  const NewNavBar({
-    required Key key,
-    this.icons = const [],
-    required this.onItemTapped,
-    required this.selectedIndex,
-  }) : super(key: key);
+  void touchedButton(int index) {
+    print("Touched: $index");
+  }
 
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
-      currentIndex: selectedIndex,
-      onTap: onItemTapped,
-      unselectedItemColor: Color.fromARGB(255, 7, 7, 7),
-      items: icons
-          .asMap()
-          .map(
-            (index, e) => MapEntry(
-              index,
-              BottomNavigationBarItem(
-                icon: e,
-                label: "Tela ${index + 1}",
-              ),
-            ),
-          )
-          .values
-          .toList(),
-    );
+        onTap: touchedButton,
+        items: icons
+            .map((e) => BottomNavigationBarItem(icon: e, label: "Teste"))
+            .toList());
   }
 }
 
-class NewAppBar extends StatelessWidget implements PreferredSizeWidget {
-  NewAppBar();
+class DataBodyWidget extends StatelessWidget {
+  List<String> objects;
 
-  @override
-  Widget build(BuildContext context) {
-    return AppBar(
-      title: const Text("Aplicativo Padrão"),
-      centerTitle: true,
+  DataBodyWidget({this.objects = const []});
+
+  Expanded processarUmElemento(String obj) {
+    return Expanded(
+      child: Center(child: Text(obj)),
     );
   }
 
   @override
-  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+  Widget build(BuildContext context) {
+    return Column(
+        children: objects
+            .map((obj) => Expanded(
+                  child: Center(child: Text(obj)),
+                ))
+            .toList());
+  }
+}
+
+class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
+  Size get preferredSize => new Size.fromHeight(kToolbarHeight);
+  @override
+  Widget build(BuildContext context) {
+    return AppBar(
+      title: const Text("Dicas"),
+      actions: [
+        PopupMenuButton(
+            onSelected: (value) {
+              // TODO: Later add the color change functionality
+            },
+            itemBuilder: (context) => [
+                  PopupMenuItem(
+                    value: Colors.black,
+                    child: Text("Black"),
+                  ),
+                  PopupMenuItem(
+                    value: Colors.amber,
+                    child: Text("Amber"),
+                  ),
+                  PopupMenuItem(
+                    value: Colors.cyan,
+                    child: Text("Cyan"),
+                  ),
+                ])
+      ],
+    );
+  }
 }
