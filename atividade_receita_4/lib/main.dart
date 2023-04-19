@@ -15,6 +15,40 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   Color _backgroundColor = Colors.white;
+  final List<String> _objects = [
+    "La Fin Du Monde - Bock",
+    "Sapporo Premiume - Sour Ale",
+    "Duvel - Pilsner",
+    "Guinness - Stout",
+    "Heineken - Lager",
+    "Budweiser - American Lager",
+    "Corona - Pale Lager",
+    "Stella Artois - Pilsner",
+    "Becks - Pilsner",
+    "Chimay - Trappist Ale",
+    "Hoegaarden - Witbier",
+    "Brahma - Pilsner",
+    "Skol - American Lager",
+    "Bavaria - Pilsner",
+    "Bohemia - Pilsner",
+    "Antarctica - American Lager",
+    "Kaiser - Pilsner",
+    "Original - Munich Helles",
+    "Sagres - Lager",
+    "Sul - Pilsner",
+    "Norteña - Lager",
+    "Baltika - Pilsner",
+    "Brahma Extra - Pale Lager",
+    "Quilmes - Lager",
+    "Crystal - Pilsner",
+    "Aguila - American Lager",
+    "Polar - Pilsner",
+    "Cusqueña - Pale Lager",
+    "Club Colombia - Pilsner",
+    "Bavaria - American Lager",
+    "Presidente - Pilsner",
+    "Victoria - Vienna Lager",
+  ];
 
   void changeBackgroundColor(Color color) {
     setState(() {
@@ -29,17 +63,13 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: MyAppBar(onColorSelected: changeBackgroundColor),
-        body: DataBodyWidget(
-          objects: const [
-            "La Fin Du Monde - Bock - 65 ibu",
-            "Sapporo Premiume - Sour Ale - 54 ibu",
-            "Duvel - Pilsner - 82 ibu"
-          ],
+        body: MyTileWidget(
+          objects: _objects,
           backgroundColor: _backgroundColor,
         ),
         bottomNavigationBar: NewNavBar(
           icons: const [
-            Icon(Icons.abc),
+            Icon(Icons.home),
             Icon(Icons.ac_unit),
             Icon(Icons.access_alarm),
             Icon(Icons.accessibility)
@@ -49,6 +79,7 @@ class _MyAppState extends State<MyApp> {
     );
   }
 }
+
 
 // ignore: must_be_immutable
 class NewNavBar extends StatelessWidget {
@@ -72,36 +103,29 @@ class NewNavBar extends StatelessWidget {
   }
 }
 
-class DataBodyWidget extends StatelessWidget {
+class MyTileWidget extends StatelessWidget {
   final List<String> objects;
   final Color backgroundColor;
 
-  const DataBodyWidget({super.key, this.objects = const [], required this.backgroundColor});
+  const MyTileWidget({Key? key, required this.objects, required this.backgroundColor})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       color: backgroundColor,
-      child: SingleChildScrollView(
-        child: SizedBox(
-          height: MediaQuery.of(context).size.height,
-          child: Column(
-            children: objects
-                .map(
-                  (obj) => Expanded(
-                    child: Center(
-                      child: Text(obj),
-                    ),
-                  ),
-                )
-                .toList(),
-          ),
-        ),
+      child: ListView.builder(
+        itemCount: objects.length,
+        itemBuilder: (context, index) {
+          return ListTile(
+            title: Text(objects[index]),
+            subtitle: Text('IBU: ${(index + 1) * 10}'),
+          );
+        },
       ),
     );
   }
 }
-
 
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
@@ -132,6 +156,10 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
             const PopupMenuItem(
               value: Colors.cyan,
               child: Text("Cyan"),
+            ),
+            const PopupMenuItem(
+              value: Colors.white,
+              child: Text("Default"),
             ),
           ],
         ),
