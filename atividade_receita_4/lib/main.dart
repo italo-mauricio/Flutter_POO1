@@ -69,11 +69,12 @@ class _MyAppState extends State<MyApp> {
         ),
         bottomNavigationBar: NewNavBar(
           icons: const [
-            Icon(Icons.home),
-            Icon(Icons.ac_unit),
-            Icon(Icons.access_alarm),
-            Icon(Icons.accessibility)
+            Icon(Icons.home, color: Colors.red),
+            Icon(Icons.ac_unit, color: Colors.blue),
+            Icon(Icons.access_alarm, color: Colors.amber),
+            Icon(Icons.accessibility, color: Colors.black,)
           ],
+          backgroundColor: Colors.deepPurple,
         ),
       ),
     );
@@ -84,7 +85,7 @@ class _MyAppState extends State<MyApp> {
 // ignore: must_be_immutable
 class NewNavBar extends StatelessWidget {
   List<Icon> icons;
-  NewNavBar({super.key, this.icons = const []});
+  NewNavBar({super.key, this.icons = const [], required MaterialColor backgroundColor});
 
   void touchedButton(int index) {
     if (kDebugMode) {
