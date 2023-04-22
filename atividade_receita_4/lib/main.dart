@@ -72,7 +72,10 @@ class _MyAppState extends State<MyApp> {
             Icon(Icons.home, color: Colors.red),
             Icon(Icons.ac_unit, color: Colors.blue),
             Icon(Icons.access_alarm, color: Colors.amber),
-            Icon(Icons.accessibility, color: Colors.black,)
+            Icon(
+              Icons.accessibility,
+              color: Colors.black,
+            )
           ],
           backgroundColor: Colors.deepPurple,
         ),
@@ -81,11 +84,13 @@ class _MyAppState extends State<MyApp> {
   }
 }
 
-
 // ignore: must_be_immutable
 class NewNavBar extends StatelessWidget {
   List<Icon> icons;
-  NewNavBar({super.key, this.icons = const [], required MaterialColor backgroundColor});
+  NewNavBar(
+      {super.key,
+      this.icons = const [],
+      required MaterialColor backgroundColor});
 
   void touchedButton(int index) {
     if (kDebugMode) {
@@ -108,25 +113,34 @@ class MyTileWidget extends StatelessWidget {
   final List<String> objects;
   final Color backgroundColor;
 
-  const MyTileWidget({Key? key, required this.objects, required this.backgroundColor})
-      : super(key: key);
+  const MyTileWidget({
+    Key? key,
+    required this.objects,
+    required this.backgroundColor,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       color: backgroundColor,
-      child: ListView.builder(
-        itemCount: objects.length,
-        itemBuilder: (context, index) {
-          return ListTile(
-            title: Text(objects[index]),
-            subtitle: Text('IBU: ${(index + 1) * 10}'),
-          );
-        },
+      child: Center(
+        child: SizedBox(
+          width: 400, // largura máxima desejada
+          child: ListView.builder(
+            itemCount: objects.length,
+            itemBuilder: (context, index) {
+              return ListTile(
+                title: Text(objects[index]),
+                subtitle: Text('IBU: ${(index + 1) * 10}'),
+              );
+            },
+          ),
+        ),
       ),
     );
   }
 }
+
 
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
