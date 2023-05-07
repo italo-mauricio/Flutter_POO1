@@ -17,6 +17,7 @@ class DataService {
           {"name": "China", "capital": "Pequim", "population": "1.4 billion"},
           {"name": "Cuba", "capital": "Havana", "population": "11 million"}
         ]),
+
         columnNamesNotifier = ValueNotifier(["Nome", "Capital", "População"]),
         propertyNamesNotifier =
             ValueNotifier(["name", "capital", "population"]);
@@ -80,17 +81,20 @@ class MyApp extends StatelessWidget {
             centerTitle: true,
             title: const Text("Dicas"),
           ),
-          body: ValueListenableBuilder(
-              valueListenable: dataService.tableStateNotifier,
-              builder: (_, value, __) {
-                return DataTableWidget(jsonObjects: value);
-              }),
+          body: Center(
+            child: ValueListenableBuilder(
+                valueListenable: dataService.tableStateNotifier,
+                builder: (_, value, __) {
+                  return DataTableWidget(jsonObjects: value);
+                }),
+          ),
           bottomNavigationBar: NewNavBar(itemSelectedCallback: (index) {
             dataService.carregar(index + 1);
           }),
         ));
   }
 }
+
 
 class NewNavBar extends HookWidget {
   var itemSelectedCallback;
