@@ -80,7 +80,7 @@ class _MyAppState extends State<MyApp> {
             },
           ),
           ListTile(
-            leading: const Icon(Icons.home),
+            leading: const Icon(Icons.exit_to_app),
             title: const Text('Logout'),
             subtitle: const Text('Finalizar sessão'),
             onTap: () {
