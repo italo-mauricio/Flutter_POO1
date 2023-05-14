@@ -66,13 +66,13 @@ flutter:
     - assets/images/foto.jpg
     - assets/images/12.jpg
     - assets/images/comunicat.jpg
-    - assets/images/barca.png
-    - assets/images/barca2.jpg
     - assets/images/barcelona2.jpg
     - assets/images/1.png
-    - assets/images/barca1.png
-    - assets/images/barca3.jpg
     - assets/images/barca4.png
+    - assets/images/barca5.jpg
+    - assets/images/barca10.jpg
+    - assets/images/campnou11.jpg
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
