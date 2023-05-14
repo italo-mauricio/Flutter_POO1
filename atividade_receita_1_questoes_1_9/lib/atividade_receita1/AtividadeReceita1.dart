@@ -1,3 +1,5 @@
+import 'package:flutter/foundation.dart';
+
 import 'table/tabela.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -7,10 +9,11 @@ import 'content/messi.dart';
 import 'content/barcelona.dart';
 import 'content/campNou.dart';
 import 'content/autor.dart';
+import 'home_page.dart';
 
-void Atividade1() {
-  runApp(MyApp());
-}
+//void Atividade1() {
+ // runApp(MyApp());
+//}
 
 // fontes para usar no resto do código
 TextStyle _FontHeader = GoogleFonts.openSans(
@@ -51,51 +54,82 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        debugShowCheckedModeBanner:
-            false, // desabilitando o "debug" no canto da tela
-        theme: ThemeData(colorScheme: const ColorScheme.light()),
-        home: Scaffold(
-          appBar: AppBar(
-            backgroundColor: Colors.blueAccent,
-            title: Text("Barcelona Futebol Clube", style: _FontHeader),
-            centerTitle: true,
+      debugShowCheckedModeBanner:
+          false, // desabilitando o "debug" no canto da tela
+      theme: ThemeData(colorScheme: const ColorScheme.light()),
+      home: Scaffold(
+           drawer: Drawer(
+        child: Column(children: [
+          Column(
+            children: [
+              UserAccountsDrawerHeader(
+                currentAccountPicture: ClipRRect(
+                  borderRadius: BorderRadius.circular(40),
+                  child: Image.network('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTedaPWyAeCHGxGgSZ8k5O__qCb3jvH6QA-oN-h-t5MqHZqHSCzz6tAQ9z01icflBxjOk0&usqp=CAU')),
+                accountName: const Text('Lionel Messi'), accountEmail: const Text('messithegoat@gmail.com')),
+            ],
           ),
-          body: IndexedStack(
-            index: _Index,
-            children: _pages,
+          ListTile(
+            leading: const Icon(Icons.home),
+            title: const Text('Inicio'),
+            subtitle: const Text('Tela de Inicio'),
+            onTap: () {
+              if (kDebugMode) {
+                print('home');
+              }
+            },
           ),
-          bottomNavigationBar: Theme(
-            data: ThemeData(canvasColor: Colors.redAccent),
-            child: BottomNavigationBar(
-              currentIndex: _Index,
-              selectedItemColor: Colors.blue,
-              unselectedItemColor: Colors.amber,
-              items: const [
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.person),
-                  label: "Inicial",
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.grade),
-                  label: "Lionel Messi",
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.home),
-                  label: "Camp Nou",
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.emoji_events),
-                  label: "Títulos",
-                ),
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.account_box),
-                  label: "Perfil",
-                ),
-              ],
-              onTap: _onItemTapped,
-            ),
+          ListTile(
+            leading: const Icon(Icons.home),
+            title: const Text('Logout'),
+            subtitle: const Text('Finalizar sessão'),
+            onTap: () {
+              Navigator.of(context).pushReplacementNamed('/');
+            },
+          )
+        ]),
+      ),
+        appBar: AppBar(
+          backgroundColor: Colors.blueAccent,
+          title: Text("Barcelona Futebol Clube", style: _FontHeader),
+          centerTitle: true,
+        ),
+        body: IndexedStack(
+          index: _Index,
+          children: _pages,
+        ),
+        bottomNavigationBar: Theme(
+          data: ThemeData(canvasColor: Colors.redAccent),
+          child: BottomNavigationBar(
+            currentIndex: _Index,
+            selectedItemColor: Colors.blue,
+            unselectedItemColor: Colors.amber,
+            items: const [
+              BottomNavigationBarItem(
+                icon: Icon(Icons.person),
+                label: "Inicial",
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.grade),
+                label: "Lionel Messi",
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.home),
+                label: "Camp Nou",
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.emoji_events),
+                label: "Títulos",
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.account_box),
+                label: "Perfil",
+              ),
+            ],
+            onTap: _onItemTapped,
           ),
         ),
-      );
-    }
+      ),
+    );
   }
+}
