@@ -40,7 +40,7 @@ class _LoginPageState extends State<LoginPage> {
             Container(
               width: 200,
               height: 200,
-              child: Image.asset('assets/images/barca2.jpg'),
+              child: Image.asset('assets/images/barca4.png'),
             ),
             Container(
               height: 20,
