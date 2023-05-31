@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -91,9 +92,41 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        theme: ThemeData(primarySwatch: Colors.deepPurple),
+        theme: ThemeData(primarySwatch: Colors.amber),
         debugShowCheckedModeBanner: false,
         home: Scaffold(
+          drawer: Drawer(
+            child: Column(children: [
+              Column(
+                children: [
+                  UserAccountsDrawerHeader(
+                      currentAccountPicture: ClipRRect(
+                          borderRadius: BorderRadius.circular(40),
+                          child: Image.asset('assets/images/logo_usuario.jpg')),
+                      accountName: const Text('Usuário'),
+                      accountEmail: const Text('usuario@gmail.com')),
+                ],
+              ),
+              ListTile(
+                leading: const Icon(Icons.home),
+                title: const Text('Inicio'),
+                subtitle: const Text('Tela de Inicio'),
+                onTap: () {
+                  if (kDebugMode) {
+                    print('home');
+                  }
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.exit_to_app),
+                title: const Text('Logout'),
+                subtitle: const Text('Finalizar sessão'),
+                onTap: () {
+                  Navigator.of(context).pushReplacementNamed('/');
+                },
+              )
+            ]),
+          ),
           appBar: AppBar(
             title: const Text("Dicas"),
           ),
