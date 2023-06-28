@@ -1,125 +1,287 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:http/http.dart' as http;
+
+import 'dart:convert';
+
+enum TableStatus { idle, loading, ready, error }
+
+class DataService {
+  final ValueNotifier<Map<String, dynamic>> tableStateNotifier = ValueNotifier(
+      {'status': TableStatus.idle, 'dataObjects': [], 'columnNames': []});
+
+  void carregar(index) {
+    final funcoes = [
+      carregarCafes,
+      carregarCervejas,
+      carregarNacoes,
+      carregarErvas
+    ];
+
+    tableStateNotifier.value = {
+      'status': TableStatus.loading,
+      'dataObjects': [],
+      'columnNames': [],
+    };
+
+    funcoes[index]();
+  }
+
+  void carregarCafes() {
+    var coffeesUri = Uri(
+        scheme: 'https',
+        host: 'random-data-api.com',
+        path: 'api/coffee/random_coffee',
+        queryParameters: {'size': '5'});
+    try {
+      http.read(coffeesUri).then((jsonString) {
+        var coffeesJson = jsonDecode(jsonString);
+
+        tableStateNotifier.value = {
+          'status': TableStatus.ready,
+          'dataObjects': coffeesJson,
+          'columnNames': ["Blend Name", "Origin", "Variety"],
+          'propertyNames': ["blend_name", "origin", "variety"]
+        };
+      });
+    } catch (err) {
+      tableStateNotifier.value = {
+        'status': TableStatus.error,
+        'dataObjects': [],
+        'columnNames': [],
+      };
+    }
+  }
+
+  Future<void> carregarNacoes() async {
+    var nationsUri = Uri(
+        scheme: 'https',
+        host: 'random-data-api.com',
+        path: 'api/nation/random_nation',
+        queryParameters: {'size': '5'});
+
+    try {
+      var jsonString = await http.read(nationsUri);
+
+      var nationsJson = jsonDecode(jsonString);
+
+      tableStateNotifier.value = {
+        'status': TableStatus.ready,
+        'dataObjects': nationsJson,
+        'columnNames': ["Nationality", "Language", "Capital"],
+        'propertyNames': ["nationality", "language", "capital"]
+      };
+    } catch (err) {
+      tableStateNotifier.value = {
+        'status': TableStatus.error,
+        'dataObjects': [],
+        'columnNames': [],
+      };
+    }
+  }
+
+  void carregarCervejas() {
+    var beersUri = Uri(
+        scheme: 'https',
+        host: 'random-data-api.com',
+        path: 'api/beer/random_beer',
+        queryParameters: {'size': '5'});
+
+    try {
+      http.read(beersUri).then((jsonString) {
+        var beersJson = jsonDecode(jsonString);
+
+        tableStateNotifier.value = {
+          'status': TableStatus.ready,
+          'dataObjects': beersJson,
+          'columnNames': ["Nome", "Estilo", "IBU"],
+          'propertyNames': ["name", "style", "ibu"]
+        };
+      });
+    } catch (err) {
+      tableStateNotifier.value = {
+        'status': TableStatus.error,
+        'dataObjects': [],
+        'columnNames': [],
+      };
+    }
+  }
+
+  void carregarErvas() {
+    var cannabisUri = Uri(
+        scheme: 'https',
+        host: 'random-data-api.com',
+        path: 'api/cannabis/random_cannabis',
+        queryParameters: {'size': '5'});
+
+    http.read(cannabisUri).then((jsonString) {
+      var cannabisJson = jsonDecode(jsonString);
+
+      tableStateNotifier.value = {
+        'status': TableStatus.ready,
+        'dataObjects': cannabisJson,
+        'columnNames': ["Strain", "Health Benefits", "Category"],
+        'propertyNames': ["strain", "health_benefit", "category"]
+      };
+    });
+  }
+}
+
+final dataService = DataService();
 
 void main() {
-  runApp(const MyApp());
+  MyApp app = MyApp();
+
+  runApp(app);
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a blue toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
-    );
+        theme: ThemeData(primarySwatch: Colors.amber),
+        debugShowCheckedModeBanner: false,
+        home: Scaffold(
+          appBar: AppBar(
+            title: const Text("Dicas"),
+          ),
+          body: Center(
+              child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ValueListenableBuilder(
+                  valueListenable: dataService.tableStateNotifier,
+                  builder: (_, value, __) {
+                    switch (value['status']) {
+                      case TableStatus.idle:
+                        return const Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                "Bem vindo(a), pegue o seu café e fique a vontade!",
+                                style: TextStyle(fontSize: 14.0),
+                                textAlign: TextAlign.center,
+                              ),
+                              Icon(Icons.keyboard_double_arrow_down)
+                            ]);
+
+                      case TableStatus.loading:
+                        return CircularProgressIndicator();
+
+                      case TableStatus.ready:
+                        return DataTableWidget(
+                            jsonObjects: value['dataObjects'],
+                            propertyNames: value['propertyNames'],
+                            columnNames: value['columnNames']);
+
+                      case TableStatus.error:
+                        return const Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                "Erro!",
+                                style: TextStyle(fontSize: 14.0),
+                                textAlign: TextAlign.center,
+                              ),
+                              Icon(Icons.error)
+                            ]);
+                    }
+
+                    return Text("...");
+                  }),
+            ],
+          )),
+          bottomNavigationBar:
+              NewNavBar(itemSelectedCallback: dataService.carregar),
+        ));
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+class NewNavBar extends HookWidget {
+  final _itemSelectedCallback;
 
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
-  final String title;
+  NewNavBar({itemSelectedCallback})
+      : _itemSelectedCallback = itemSelectedCallback ?? (int) {}
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  Widget build(BuildContext context) {
+    var state = useState(1);
+
+    return BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        onTap: (index) {
+          state.value = index;
+
+          _itemSelectedCallback(index);
+        },
+        currentIndex: state.value,
+        items: const [
+          BottomNavigationBarItem(
+            label: "Cafés",
+            icon: Icon(Icons.coffee_outlined),
+          ),
+          BottomNavigationBarItem(
+              label: "Cervejas", icon: Icon(Icons.local_drink_outlined)),
+          BottomNavigationBarItem(
+              label: "Nações", icon: Icon(Icons.flag_outlined)),
+          BottomNavigationBarItem(label: "Erva", icon: Icon(Icons.forest))
+        ]);
+  }
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+class DataTableWidget extends HookWidget {
+  final List jsonObjects;
 
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
+  final List<String> columnNames;
+
+  final List<String> propertyNames;
+
+  const DataTableWidget(
+      {super.key, this.jsonObjects = const [],
+      this.columnNames = const ["Nome", "Estilo", "IBU"],
+      this.propertyNames = const ["name", "style", "ibu"]});
+
+  dynamic _compareMaker(String property, bool asc) {
+    return asc
+        ? (a, b) => a[property].compareTo(b[property]) as int
+        : (a, b) => b[property].compareTo(a[property]) as int;
   }
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
-    return Scaffold(
-      appBar: AppBar(
-        // TRY THIS: Try changing the color here to a specific color (to
-        // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
-        // change color while the other colors stay the same.
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          //
-          // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
-          // action in the IDE, or press "p" in the console), to see the
-          // wireframe for each widget.
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
-    );
+    var internalState = useState({
+      'asc': true,
+      'sortColumn': null,
+      'objects': jsonObjects,
+    });
+
+    return SingleChildScrollView(
+        child: DataTable(
+            sortAscending: internalState.value['asc'] as bool,
+            sortColumnIndex: internalState.value['sortColumn'] != null
+                ? internalState.value['sortColumn'] as int
+                : null,
+            columns: columnNames
+                .map((name) => DataColumn(
+                    onSort: (index, isAscending) {
+                      final compare =
+                          _compareMaker(propertyNames[index], isAscending);
+                      jsonObjects.sort(compare);
+                      internalState.value = {
+                        'objects': jsonObjects,
+                        'sortColumn': index,
+                        'asc': isAscending
+                      };
+                    },
+                    label: Expanded(
+                        child: Text(name,
+                            style: const TextStyle(fontStyle: FontStyle.italic)))))
+                .toList(),
+            rows: jsonObjects
+                .map((obj) => DataRow(
+                    cells: propertyNames
+                        .map((propName) => DataCell(Text(obj[propName])))
+                        .toList()))
+                .toList()));
   }
 }
