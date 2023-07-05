@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
           builder: (_, value, __) {
             switch (value['status']) {
               case TableStatus.idle:
-                return const Center(child: Text("Toque em algum botão"));
+                return const Center(child: Text("Pressione ENTER para continuar..."));
 
               case TableStatus.loading:
                 return const Center(child: CircularProgressIndicator());
