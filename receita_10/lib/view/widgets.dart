@@ -48,7 +48,7 @@ class MyApp extends StatelessWidget {
                       ),
                       const SizedBox(height: 20),
                       Image.asset(
-                        'assets/botafogo.png',
+                        'assets/saopaulo.png',
                         width: 200,
                         height: 200,
                       ),
@@ -97,7 +97,7 @@ class CustomDrawer extends StatelessWidget {
       child: ListView(
         padding: EdgeInsets.zero,
         children: [
-          DrawerHeader(
+          const DrawerHeader(
             decoration: BoxDecoration(
               color: Colors.amber,
             ),
@@ -110,7 +110,7 @@ class CustomDrawer extends StatelessWidget {
             ),
           ),
           ListTile(
-            title: Text(
+            title: const Text(
               'Início',
               style: TextStyle(
                 fontWeight: FontWeight.bold,
