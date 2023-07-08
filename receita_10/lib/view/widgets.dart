@@ -33,20 +33,23 @@ class MyApp extends StatelessWidget {
           builder: (_, value, __) {
             switch (value['status']) {
               case TableStatus.idle:
-                return const Center(child: Text("Pressione ENTER para continuar..."));
+                return const Center(
+                    child: Text("Pressione ENTER para continuar..."));
 
               case TableStatus.loading:
                 return const Center(child: CircularProgressIndicator());
 
               case TableStatus.ready:
-                return SingleChildScrollView(
-                  scrollDirection: Axis.vertical,
+                return Center( // Centralizar as informações
                   child: SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: DataTableWidget(
-                      jsonObjects: value['dataObjects'],
-                      columnNames: value['columnNames'],
-                      propertyNames: value['propertyNames'],
+                    scrollDirection: Axis.vertical,
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: DataTableWidget(
+                        jsonObjects: value['dataObjects'],
+                        columnNames: value['columnNames'],
+                        propertyNames: value['propertyNames'],
+                      ),
                     ),
                   ),
                 );
@@ -117,12 +120,14 @@ class DataTableWidget extends StatelessWidget {
           .asMap()
           .entries
           .map((entry) => DataColumn(
-                onSort: (columnIndex, ascending) => dataService
-                    .ordenarEstadoAtual(propertyNames[columnIndex]),
+                onSort: (columnIndex, ascending) =>
+                    dataService.ordenarEstadoAtual(propertyNames[columnIndex]),
                 label: Expanded(
-                  child: Text(
-                    entry.value,
-                    style: const TextStyle(fontStyle: FontStyle.italic),
+                  child: Center( // Centralizar o texto das colunas
+                    child: Text(
+                      entry.value,
+                      style: const TextStyle(fontStyle: FontStyle.italic),
+                    ),
                   ),
                 ),
               ))
@@ -131,7 +136,9 @@ class DataTableWidget extends StatelessWidget {
         return DataRow(
           cells: propertyNames.map((propName) {
             return DataCell(
-              Text(obj[propName]),
+              Center( // Centralizar o texto das células
+                child: Text(obj[propName]),
+              ),
             );
           }).toList(),
         );
