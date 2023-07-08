@@ -24,23 +24,44 @@ class MyApp extends StatelessWidget {
               }).toList(),
               onSelected: (number) {
                 dataService.numberOfItems = number;
+                dataService.carregarPorTipo(
+                    dataService.tableStateNotifier.value['itemType']);
               },
             )
           ],
         ),
+        drawer: CustomDrawer(), // Adiciona o Drawer
         body: ValueListenableBuilder(
           valueListenable: dataService.tableStateNotifier,
           builder: (_, value, __) {
             switch (value['status']) {
               case TableStatus.idle:
-                return const Center(
-                    child: Text("Pressione ENTER para continuar..."));
+                return Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text(
+                        "Pressione ENTER para continuar...",
+                        style: TextStyle(
+                          fontSize: 18,
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      Image.asset(
+                        'assets/botafogo.png',
+                        width: 200,
+                        height: 200,
+                      ),
+                    ],
+                  ),
+                );
 
               case TableStatus.loading:
                 return const Center(child: CircularProgressIndicator());
 
               case TableStatus.ready:
-                return Center( // Centralizar as informações
+                return Center(
+                  // Centralizar as informações
                   child: SingleChildScrollView(
                     scrollDirection: Axis.vertical,
                     child: SingleChildScrollView(
@@ -64,6 +85,48 @@ class MyApp extends StatelessWidget {
         bottomNavigationBar: NewNavBar(
           itemSelectedCallback: dataService.carregar,
         ),
+      ),
+    );
+  }
+}
+
+class CustomDrawer extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Drawer(
+      child: ListView(
+        padding: EdgeInsets.zero,
+        children: [
+          DrawerHeader(
+            decoration: BoxDecoration(
+              color: Colors.amber,
+            ),
+            child: Text(
+              'Menu',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 24,
+              ),
+            ),
+          ),
+          ListTile(
+            title: Text(
+              'Início',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+              ),
+            ),
+            onTap: () {
+              dataService.tableStateNotifier.value = {
+                'status': TableStatus.idle,
+                'dataObjects': [],
+                'itemType': ItemType.none,
+              };
+              Navigator.pop(context); // Fecha o Drawer
+            },
+          ),
+        ],
       ),
     );
   }
@@ -120,25 +183,20 @@ class DataTableWidget extends StatelessWidget {
           .asMap()
           .entries
           .map((entry) => DataColumn(
-                onSort: (columnIndex, ascending) =>
-                    dataService.ordenarEstadoAtual(propertyNames[columnIndex]),
-                label: Expanded(
-                  child: Center( // Centralizar o texto das colunas
-                    child: Text(
-                      entry.value,
-                      style: const TextStyle(fontStyle: FontStyle.italic),
-                    ),
-                  ),
+                label: Text(
+                  entry.value,
+                  style: const TextStyle(fontStyle: FontStyle.italic),
                 ),
+                onSort: (columnIndex, ascending) {
+                  dataService.ordenarEstadoAtual(columnIndex, ascending);
+                },
               ))
           .toList(),
       rows: jsonObjects.map((obj) {
         return DataRow(
           cells: propertyNames.map((propName) {
             return DataCell(
-              Center( // Centralizar o texto das células
-                child: Text(obj[propName]),
-              ),
+              Text(obj[propName]),
             );
           }).toList(),
         );

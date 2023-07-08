@@ -71,8 +71,7 @@ class DataService {
             : n;
   }
 
-  final ValueNotifier<Map<String, dynamic>> tableStateNotifier =
-      ValueNotifier({
+  final ValueNotifier<Map<String, dynamic>> tableStateNotifier = ValueNotifier({
     'status': TableStatus.idle,
     'dataObjects': [],
     'itemType': ItemType.none,
@@ -83,7 +82,7 @@ class DataService {
     carregarPorTipo(params[index]);
   }
 
-  void ordenarEstadoAtual(String propriedade) {
+  void ordenarEstadoAtual(int columnIndex, bool ascending) {
     List objetos = tableStateNotifier.value['dataObjects'] ?? [];
 
     if (objetos.isEmpty) return;
@@ -93,19 +92,23 @@ class DataService {
 
     final type = tableStateNotifier.value['itemType'];
 
-    if (type == ItemType.beer && propriedade == 'name') {
+    if (type == ItemType.beer && columnIndex == 0) {
       objetosOrdenados = ord.ordenarFuderoso(
         objetos,
         DecididorCervejaNomeCrescente(),
       );
-    } else if (type == ItemType.beer && propriedade == 'style') {
+    } else if (type == ItemType.beer && columnIndex == 1) {
       objetosOrdenados = ord.ordenarFuderoso(
         objetos,
         DecididorCervejaEstiloCrescente(),
       );
     }
 
-    emitirEstadoOrdenado(objetosOrdenados, propriedade);
+    if (!ascending) {
+      objetosOrdenados = objetosOrdenados.reversed.toList();
+    }
+
+    emitirEstadoOrdenado(objetosOrdenados);
   }
 
   Uri montarUri(ItemType type) {
@@ -126,11 +129,9 @@ class DataService {
     return json;
   }
 
-  void emitirEstadoOrdenado(List objetosOrdenados, String propriedade) {
+  void emitirEstadoOrdenado(List objetosOrdenados) {
     var estado = Map<String, dynamic>.from(tableStateNotifier.value);
     estado['dataObjects'] = objetosOrdenados;
-    estado['sortCriteria'] = propriedade;
-    estado['ascending'] = true;
     tableStateNotifier.value = estado;
   }
 
@@ -169,6 +170,13 @@ class DataService {
     var uri = montarUri(type);
     var json = await acessarApi(uri);
     emitirEstadoPronto(type, json);
+  }
+
+  void atualizarNumeroDeItens(int numero) {
+    numberOfItems = numero;
+    if (tableStateNotifier.value['status'] == TableStatus.ready) {
+      carregarPorTipo(tableStateNotifier.value['itemType']);
+    }
   }
 }
 
