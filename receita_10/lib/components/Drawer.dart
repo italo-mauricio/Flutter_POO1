@@ -8,7 +8,7 @@ class DrawerApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const Color primaryColor = Color.fromRGBO(35, 131, 51, 1.0);
+    const Color primaryColor = Color.fromRGBO(245, 204, 0, 0.872);
 
     return Drawer(
       child: Column(
@@ -18,10 +18,10 @@ class DrawerApp extends StatelessWidget {
               UserAccountsDrawerHeader(
                 currentAccountPicture: ClipRRect(
                   borderRadius: BorderRadius.circular(40),
-                  child: Image.asset('lib/assets/logo.png'),
+                  child: Image.asset('assets/saopaulo.png'),
                 ),
                 accountName: const Text('Usuário'),
-                accountEmail: const Text('usuariobrasileirao@gmail.com'),
+                accountEmail: const Text('usuario@gmail.com'),
                 decoration: const BoxDecoration(
                   color: primaryColor,
                 ),
@@ -38,12 +38,6 @@ class DrawerApp extends StatelessWidget {
               };
               Navigator.pop(context);
             },
-          ),
-          ListTile(
-            leading: const Icon(Icons.exit_to_app),
-            title: const Text('Logout'),
-            subtitle: const Text('Finalizar sessão'),
-            onTap: logoutCallback, // Chama o callback de logout
           ),
         ],
       ),

@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 
 import 'package:http/http.dart' as http;
@@ -64,6 +66,19 @@ class DataService {
     'dataObjects': [],
     'itemType': ItemType.none
   });
+
+  List<Map<String, dynamic>> previous = [];
+
+  void changeAtualState() {
+    previous.removeLast();
+    tableStateNotifier.value = previous.isNotEmpty
+        ? previous[previous.length - 1]
+        : {
+            'status': TableStatus.idle,
+            'dataObjects': [],
+            'itemType': ItemType.none,
+          };
+  }
 
   void load(int index) {
     final params = [
@@ -149,7 +164,8 @@ class DataService {
     return [...tableStateNotifier.value['dataObjects'], ...items];
   }
 
-  void emitSortedState(List<dynamic> sortedObjects, String property, bool ascending) {
+  void emitSortedState(
+      List<dynamic> sortedObjects, String property, bool ascending) {
     var state = Map<String, dynamic>.from(tableStateNotifier.value);
 
     state['dataObjects'] = sortedObjects;
@@ -157,6 +173,7 @@ class DataService {
     state['sortAscending'] = ascending; // Armazena a ordem de classificação
 
     tableStateNotifier.value = state;
+    previous.add(tableStateNotifier.value);
   }
 
   void emitLoadingState(ItemType type) {
@@ -175,6 +192,7 @@ class DataService {
       'propertyNames': type.properties,
       'columnNames': type.columns,
     };
+    previous.add(tableStateNotifier.value);
   }
 
   bool isRequestPending() =>
