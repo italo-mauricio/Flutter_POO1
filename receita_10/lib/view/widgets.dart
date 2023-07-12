@@ -27,46 +27,49 @@ class MyApp extends StatelessWidget {
         ),
         drawer: DrawerApp(logoutCallback: () {  },), // Adiciona o Drawer personalizado
         body: ValueListenableBuilder(
-          valueListenable: dataService.tableStateNotifier,
-          builder: (_, value, __) {
-            switch (value['status']) {
-              case TableStatus.idle:
-                return Center(
-                  child: SingleChildScrollView(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Image.asset(
-                          'assets/saopaulo.png',
-                          width: 200,
-                          height: 200,
-                        ),
-                        const SizedBox(height: 16),
-                        const Text("Pressione ENTER para continuar...")
-                      ],
-                    ),
-                  ),
-                );
-              case TableStatus.loading:
-                return const Center(child: CircularProgressIndicator());
-              case TableStatus.ready:
-                return SingleChildScrollView(
-                  scrollDirection: Axis.vertical,
-                  child: SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: DataTableWidget(
-                      jsonObjects: value['dataObjects'],
-                      propertyNames: value['propertyNames'],
-                      columnNames: value['columnNames'],
-                    ),
-                  ),
-                );
-              case TableStatus.error:
-                return Text("Lascou");
-            }
-            return Text("...");
-          },
-        ),
+  valueListenable: dataService.tableStateNotifier,
+  builder: (_, value, __) {
+    switch (value['status']) {
+      case TableStatus.idle:
+        return Center(
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset(
+                  'assets/saopaulo.png',
+                  width: 200,
+                  height: 200,
+                ),
+                const SizedBox(height: 16),
+                const Text("Pressione ENTER para continuar...")
+              ],
+            ),
+          ),
+        );
+      case TableStatus.loading:
+        return const Center(child: CircularProgressIndicator());
+      case TableStatus.ready:
+        return Center( // Centralize o conteúdo da API
+          child: SingleChildScrollView(
+            scrollDirection: Axis.vertical,
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: DataTableWidget(
+                jsonObjects: value['dataObjects'],
+                propertyNames: value['propertyNames'],
+                columnNames: value['columnNames'],
+              ),
+            ),
+          ),
+        );
+      case TableStatus.error:
+        return Text("Lascou");
+    }
+    return Text("...");
+  },
+),
+
         bottomNavigationBar: NewNavBar(itemSelectedCallback: dataService.load),
       ),
     );
