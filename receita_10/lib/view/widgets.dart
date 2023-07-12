@@ -25,51 +25,50 @@ class MyApp extends StatelessWidget {
             searchCallback: handleSearch,
           ),
         ),
-        drawer: DrawerApp(logoutCallback: () {  },), // Adiciona o Drawer personalizado
+        drawer: DrawerApp(logoutCallback: () {}),
         body: ValueListenableBuilder(
-  valueListenable: dataService.tableStateNotifier,
-  builder: (_, value, __) {
-    switch (value['status']) {
-      case TableStatus.idle:
-        return Center(
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Image.asset(
-                  'assets/saopaulo.png',
-                  width: 200,
-                  height: 200,
-                ),
-                const SizedBox(height: 16),
-                const Text("Pressione ENTER para continuar...")
-              ],
-            ),
-          ),
-        );
-      case TableStatus.loading:
-        return const Center(child: CircularProgressIndicator());
-      case TableStatus.ready:
-        return Center( // Centralize o conteúdo da API
-          child: SingleChildScrollView(
-            scrollDirection: Axis.vertical,
-            child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: DataTableWidget(
-                jsonObjects: value['dataObjects'],
-                propertyNames: value['propertyNames'],
-                columnNames: value['columnNames'],
-              ),
-            ),
-          ),
-        );
-      case TableStatus.error:
-        return Text("Lascou");
-    }
-    return Text("...");
-  },
-),
-
+          valueListenable: dataService.tableStateNotifier,
+          builder: (_, value, __) {
+            switch (value['status']) {
+              case TableStatus.idle:
+                return Center(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.asset(
+                          'assets/saopaulo.png',
+                          width: 200,
+                          height: 200,
+                        ),
+                        const SizedBox(height: 16),
+                        const Text("Pressione ENTER para continuar...")
+                      ],
+                    ),
+                  ),
+                );
+              case TableStatus.loading:
+                return const Center(child: CircularProgressIndicator());
+              case TableStatus.ready:
+                return Center(
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.vertical,
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: DataTableWidget(
+                        jsonObjects: value['dataObjects'],
+                        propertyNames: value['propertyNames'],
+                        columnNames: value['columnNames'],
+                      ),
+                    ),
+                  ),
+                );
+              case TableStatus.error:
+                return Text("Lascou");
+            }
+            return Text("...");
+          },
+        ),
         bottomNavigationBar: NewNavBar(itemSelectedCallback: dataService.load),
       ),
     );
@@ -79,8 +78,7 @@ class MyApp extends StatelessWidget {
 class NewNavBar extends HookWidget {
   final _itemSelectedCallback;
 
-  NewNavBar({itemSelectedCallback})
-      : _itemSelectedCallback = itemSelectedCallback ?? (int) {}
+  NewNavBar({itemSelectedCallback}) : _itemSelectedCallback = itemSelectedCallback ?? (int) {}
 
   @override
   Widget build(BuildContext context) {
@@ -214,7 +212,7 @@ class MyAppBar extends HookWidget {
     );
   }
 
-  void showFilterMenu(BuildContext context, ValueNotifier<int> state) {
+  void showFilterMenu(BuildContext context, ValueNotifier<int> state) async {
     final List<PopupMenuEntry<int>> menuItems = listNumbers.map((number) {
       return PopupMenuItem(
         value: number,
@@ -222,16 +220,16 @@ class MyAppBar extends HookWidget {
       );
     }).toList();
 
-    showMenu<int>(
+    final selectedValue = await showMenu<int>(
       context: context,
       position: RelativeRect.fromLTRB(0, kToolbarHeight, 0, 0),
       items: menuItems,
-    ).then((value) {
-      if (value != null) {
-        // Ação a ser executada quando uma opção do filtro for selecionada
-        state.value = value;
-        dataService.numberOfItems = value;
-      }
-    });
+    );
+
+    if (selectedValue != null) {
+      state.value = selectedValue;
+      dataService.numberOfItems = selectedValue;
+      dataService.load(selectedValue);
+    }
   }
 }

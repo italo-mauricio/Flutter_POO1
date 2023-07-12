@@ -1,14 +1,8 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
-
 import 'package:http/http.dart' as http;
-
 import 'dart:convert';
 
-import '../util/ordernator.dart';
-
-import '../data/models.dart';
+import 'models.dart';
 
 enum TableStatus { idle, loading, ready, error }
 
@@ -17,29 +11,43 @@ enum ItemType {
   coffee,
   nation,
   cannabis,
-  none;
+  none,
+}
 
-  String get asString => '$name';
+extension ItemTypeExtension on ItemType {
+  List<String> get columns {
+    switch (this) {
+      case ItemType.coffee:
+        return ["Nome", "Origem", "Tipo"];
+      case ItemType.beer:
+        return ["Nome", "Estilo", "IBU"];
+      case ItemType.nation:
+        return ["Nome", "Capital", "Idioma", "Esporte"];
+      case ItemType.cannabis:
+        return ["Strain", "Benefícios para a saúde", "Categoria"];
+      default:
+        return [];
+    }
+  }
 
-  List<String> get columns => this == coffee
-      ? ["Nome", "Origem", "Tipo"]
-      : this == beer
-          ? ["Nome", "Estilo", "IBU"]
-          : this == nation
-              ? ["Nome", "Capital", "Idioma", "Esporte"]
-              : this == cannabis
-                  ? ["Strain", "Health Benefits", "Category"]
-                  : [];
+  List<String> get properties {
+    switch (this) {
+      case ItemType.coffee:
+        return ["blend_name", "origin", "variety"];
+      case ItemType.beer:
+        return ["name", "style", "ibu"];
+      case ItemType.nation:
+        return ["nationality", "capital", "language", "national_sport"];
+      case ItemType.cannabis:
+        return ["strain", "health_benefit", "category"];
+      default:
+        return [];
+    }
+  }
 
-  List<String> get properties => this == coffee
-      ? ["blend_name", "origin", "variety"]
-      : this == beer
-          ? ["name", "style", "ibu"]
-          : this == nation
-              ? ["nationality", "capital", "language", "national_sport"]
-              : this == cannabis
-                  ? ["strain", "health_benefit", "category"]
-                  : [];
+  String get asString {
+    return this.toString().split('.').last;
+  }
 }
 
 class DataService {
@@ -64,21 +72,8 @@ class DataService {
   final ValueNotifier<Map<String, dynamic>> tableStateNotifier = ValueNotifier({
     'status': TableStatus.idle,
     'dataObjects': [],
-    'itemType': ItemType.none
+    'itemType': ItemType.none,
   });
-
-  List<Map<String, dynamic>> previous = [];
-
-  void changeAtualState() {
-    previous.removeLast();
-    tableStateNotifier.value = previous.isNotEmpty
-        ? previous[previous.length - 1]
-        : {
-            'status': TableStatus.idle,
-            'dataObjects': [],
-            'itemType': ItemType.none,
-          };
-  }
 
   void load(int index) {
     final params = [
@@ -111,11 +106,18 @@ class DataService {
   }
 
   void sortCurrentState(final String property, bool ascending) {
-    List objects = tableStateNotifier.value['dataObjects'] ?? [];
+    List<dynamic> objects = List.of(tableStateNotifier.value['dataObjects'] ?? []);
 
     if (objects.isEmpty) return;
 
-    objects.sort((a, b) => a[property].compareTo(b[property]));
+    objects.sort((a, b) {
+      if (a[property] is String && b[property] is String) {
+        return a[property].compareTo(b[property]);
+      } else if (a[property] is num && b[property] is num) {
+        return a[property].compareTo(b[property]);
+      }
+      return 0;
+    });
 
     if (!ascending) {
       objects = objects.reversed.toList();
@@ -124,12 +126,12 @@ class DataService {
     emitSortedState(objects, property, ascending);
   }
 
-  Uri buildUri(ItemType type) {
+  Uri buildUri(ItemType type, int numberOfItems) {
     return Uri(
       scheme: 'https',
       host: 'random-data-api.com',
       path: 'api/${type.asString}/random_${type.asString}',
-      queryParameters: {'size': '$_numberOfItems'},
+      queryParameters: {'size': '$numberOfItems'},
     );
   }
 
@@ -145,27 +147,22 @@ class DataService {
         items = json.map<Beer>((itemJson) => Beer.fromJson(itemJson)).toList();
         break;
       case ItemType.coffee:
-        items =
-            json.map<Coffee>((itemJson) => Coffee.fromJson(itemJson)).toList();
+        items = json.map<Coffee>((itemJson) => Coffee.fromJson(itemJson)).toList();
         break;
       case ItemType.nation:
-        items =
-            json.map<Nation>((itemJson) => Nation.fromJson(itemJson)).toList();
+        items = json.map<Nation>((itemJson) => Nation.fromJson(itemJson)).toList();
         break;
       case ItemType.cannabis:
-        items = json
-            .map<Cannabis>((itemJson) => Cannabis.fromJson(itemJson))
-            .toList();
+        items = json.map<Cannabis>((itemJson) => Cannabis.fromJson(itemJson)).toList();
         break;
       default:
         items = [];
     }
 
-    return [...tableStateNotifier.value['dataObjects'], ...items];
+    return items;
   }
 
-  void emitSortedState(
-      List<dynamic> sortedObjects, String property, bool ascending) {
+  void emitSortedState(List<dynamic> sortedObjects, String property, bool ascending) {
     var state = Map<String, dynamic>.from(tableStateNotifier.value);
 
     state['dataObjects'] = sortedObjects;
@@ -173,14 +170,13 @@ class DataService {
     state['sortAscending'] = ascending; // Armazena a ordem de classificação
 
     tableStateNotifier.value = state;
-    previous.add(tableStateNotifier.value);
   }
 
   void emitLoadingState(ItemType type) {
     tableStateNotifier.value = {
       'status': TableStatus.loading,
       'dataObjects': [],
-      'itemType': type
+      'itemType': type,
     };
   }
 
@@ -192,14 +188,11 @@ class DataService {
       'propertyNames': type.properties,
       'columnNames': type.columns,
     };
-    previous.add(tableStateNotifier.value);
   }
 
-  bool isRequestPending() =>
-      tableStateNotifier.value['status'] == TableStatus.loading;
+  bool isRequestPending() => tableStateNotifier.value['status'] == TableStatus.loading;
 
-  bool hasItemTypeChanged(ItemType type) =>
-      tableStateNotifier.value['itemType'] != type;
+  bool hasItemTypeChanged(ItemType type) => tableStateNotifier.value['itemType'] != type;
 
   void loadByType(ItemType type) async {
     // Ignore request if a previous request is still pending
@@ -209,7 +202,7 @@ class DataService {
       emitLoadingState(type);
     }
 
-    var uri = buildUri(type);
+    var uri = buildUri(type, numberOfItems);
 
     var json = await accessApi(uri, type);
 
@@ -218,19 +211,3 @@ class DataService {
 }
 
 final dataService = DataService();
-
-class JsonComparator extends Decider {
-  final String property;
-  final bool ascending;
-
-  JsonComparator(this.property, [this.ascending = true]);
-
-  @override
-  bool needsToSwap(current, next) {
-    try {
-      return current[property].compareTo(next[property]) > 0;
-    } catch (error) {
-      return false;
-    }
-  }
-}
