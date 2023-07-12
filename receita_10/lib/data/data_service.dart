@@ -208,6 +208,15 @@ class DataService {
 
     emitReadyState(type, json);
   }
+
+  void changeAtualState() {
+    var state = Map<String, dynamic>.from(tableStateNotifier.value);
+
+    // Implemente o comportamento desejado para alterar o estado atual
+    // por exemplo, alterar os valores das propriedades do estado atual.
+
+    tableStateNotifier.value = state;
+  }
 }
 
 final dataService = DataService();
