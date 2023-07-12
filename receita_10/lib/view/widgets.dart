@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        theme: ThemeData(primarySwatch: Colors.deepPurple),
+        theme: ThemeData(primarySwatch: Colors.amber),
         debugShowCheckedModeBanner: false,
         home: Scaffold(
           appBar: PreferredSize(
@@ -31,7 +31,22 @@ class MyApp extends StatelessWidget {
               builder: (_, value, __) {
                 switch (value['status']) {
                   case TableStatus.idle:
-                    return const Center(child: Text("Toque em algum botão"));
+                    return Center(
+                      child: SingleChildScrollView(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Image.asset(
+                              'assets/saopaulo.png',
+                              width: 200, // Defina o tamanho desejado
+                              height: 200,
+                            ),
+                            const SizedBox(height: 16),
+                            const Text("Pressione ENTER para continuar...")
+                          ],
+                        ),
+                      ),
+                    );
 
                   case TableStatus.loading:
                     return const Center(child: CircularProgressIndicator());
